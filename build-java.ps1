@@ -10,22 +10,39 @@ if (Test-Path "lib\burpsuite_pro.jar") {
     $burpJar = (Resolve-Path "lib\burpsuite_pro.jar").Path
     Write-Host "Found existing Burp Suite JAR: $burpJar" -ForegroundColor Green
 } else {
-    $burpDir = "C:\Users\${username}\AppData\Local\BurpSuitePro\"
+    $burpDirs = @(
+        "$env:LOCALAPPDATA\BurpSuitePro",
+        "$env:APPDATA\BurpSuitePro",
+        "$env:USERPROFILE\AppData\Local\BurpSuitePro"
+    )
     
-    $allJars = Get-ChildItem -Path $burpDir -Filter "*.jar" -ErrorAction SilentlyContinue
-    foreach ($jar in $allJars) {
-        $name = $jar.Name.ToLower()
-        if ($name -notlike "*loader*" -and $name -notlike "*keygen*" -and 
-            ($name -like "burpsuite*" -or $name -like "burp*")) {
-            $burpJar = $jar.FullName
-            Write-Host "Found Burp Suite JAR: $burpJar" -ForegroundColor Yellow
-            break
+    if ($env:BURP_SUITE_PATH) {
+        $burpDirs = @($env:BURP_SUITE_PATH) + $burpDirs
+    }
+    
+    $burpJar = $null
+    foreach ($burpDir in $burpDirs) {
+        if (Test-Path $burpDir) {
+            $allJars = Get-ChildItem -Path $burpDir -Filter "*.jar" -ErrorAction SilentlyContinue
+            foreach ($jar in $allJars) {
+                $name = $jar.Name.ToLower()
+                if ($name -notlike "*loader*" -and $name -notlike "*keygen*" -and 
+                    ($name -like "burpsuite*" -or $name -like "burp*")) {
+                    $burpJar = $jar.FullName
+                    Write-Host "Found Burp Suite JAR: $burpJar" -ForegroundColor Yellow
+                    break
+                }
+            }
+            if ($burpJar) {
+                break
+            }
         }
     }
     
     if (-not $burpJar) {
         Write-Host "ERROR: Burp Suite JAR not found!" -ForegroundColor Red
         Write-Host "Please manually copy Burp Suite JAR to: lib\burpsuite_pro.jar" -ForegroundColor Yellow
+        Write-Host "Or set BURP_SUITE_PATH environment variable to your Burp Suite installation directory." -ForegroundColor Yellow
         exit 1
     }
 }
@@ -34,10 +51,13 @@ if (Test-Path "lib\burpsuite_pro.jar") {
 if (-not (Test-Path "lib")) {
     New-Item -ItemType Directory -Path "lib" | Out-Null
 }
+
+# Copy JAR file
 if (-not (Test-Path "lib\burpsuite_pro.jar")) {
     Copy-Item $burpJar -Destination "lib\burpsuite_pro.jar" -Force
     Write-Host "Copied JAR to lib\burpsuite_pro.jar" -ForegroundColor Green
 }
+
 # Create local Maven repository structure
 $repoDir = "lib\net\portswigger\burp\extensions\burp-extensions-api\1.0"
 if (-not (Test-Path $repoDir)) {
@@ -125,7 +145,6 @@ foreach ($path in $mavenPaths) {
     }
 }
 
-# Maven이 없으면 오류
 if (-not $mvn) {
     Write-Host "ERROR: Maven not found!" -ForegroundColor Red
     Write-Host "Please install Maven and ensure it's in your PATH." -ForegroundColor Yellow
