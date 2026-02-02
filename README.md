@@ -58,7 +58,7 @@ A Burp Suite extension for compressing and decompressing Zlib-encoded HTTP respo
 mvn clean package
 ```
 
-After building, the `target/zlib-handler-1.0.0.jar` file will be created.
+After building, the `target/zlib-handler-1.0.1.jar` file will be created.
 
 **Note**: The `build-java.ps1` script automatically finds the Burp Suite JAR and installs it to the local Maven repository.
 
@@ -187,6 +187,10 @@ This tool should only be used for security testing and authorized penetration te
 - All contributors
 
 ## Changelog
+
+### v1.0.1
+- Added automatic line wrapping for Decompressed Output area
+- Improved text readability with word-wrap feature
 
 ### v1.0.0
 - Initial release
