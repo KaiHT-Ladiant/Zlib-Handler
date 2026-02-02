@@ -1,4 +1,4 @@
-# Zlib Handler - Burp Suite Extension
+<img width="1212" height="870" alt="image" src="https://github.com/user-attachments/assets/815b7fc5-c18a-45fb-a462-6976a54369d0" /># Zlib Handler - Burp Suite Extension
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Burp Suite](https://img.shields.io/badge/Burp%20Suite-Extension-orange.svg)](https://portswigger.net/burp)
@@ -21,7 +21,8 @@ A Burp Suite extension for compressing and decompressing Zlib-encoded HTTP respo
 
 ## Screenshots
 
-![Zlib Handler Extension](screenshot.png)
+![Zlib Handler Extension](<img width="1212" height="870" alt="image" src="https://github.com/user-attachments/assets/989f6a5b-511f-4882-84d4-e9cf62dba7f0" />
+)
 
 ## Requirements
 
