@@ -5,20 +5,15 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "Building Zlib Handler Burp Extension..." -ForegroundColor Green
 
-# Find Burp Suite JAR
-# 먼저 lib 디렉토리에 이미 있는지 확인
 $burpJar = $null
 if (Test-Path "lib\burpsuite_pro.jar") {
     $burpJar = (Resolve-Path "lib\burpsuite_pro.jar").Path
     Write-Host "Found existing Burp Suite JAR: $burpJar" -ForegroundColor Green
 } else {
-    # lib에 없으면 Burp Suite 디렉토리에서 찾기
-    $burpDir = "C:\Users\김성준\AppData\Local\BurpSuitePro\"
+    $burpDir = "C:\Users\${username}\AppData\Local\BurpSuitePro\"
     
-    # Loader나 Keygen이 아닌 실제 Burp Suite Pro JAR 찾기
     $allJars = Get-ChildItem -Path $burpDir -Filter "*.jar" -ErrorAction SilentlyContinue
     foreach ($jar in $allJars) {
-        # Loader, Keygen, keygen 제외하고 burpsuite로 시작하는 JAR 찾기
         $name = $jar.Name.ToLower()
         if ($name -notlike "*loader*" -and $name -notlike "*keygen*" -and 
             ($name -like "burpsuite*" -or $name -like "burp*")) {
@@ -39,13 +34,10 @@ if (Test-Path "lib\burpsuite_pro.jar") {
 if (-not (Test-Path "lib")) {
     New-Item -ItemType Directory -Path "lib" | Out-Null
 }
-
-# Copy JAR file (lib에 없을 때만)
 if (-not (Test-Path "lib\burpsuite_pro.jar")) {
     Copy-Item $burpJar -Destination "lib\burpsuite_pro.jar" -Force
     Write-Host "Copied JAR to lib\burpsuite_pro.jar" -ForegroundColor Green
 }
-
 # Create local Maven repository structure
 $repoDir = "lib\net\portswigger\burp\extensions\burp-extensions-api\1.0"
 if (-not (Test-Path $repoDir)) {
@@ -165,13 +157,13 @@ Write-Host "Building project..." -ForegroundColor Green
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "`nBuild successful!" -ForegroundColor Green
-    Write-Host "JAR file location: target\zlib-handler-1.0.0.jar" -ForegroundColor Cyan
+    Write-Host "JAR file location: target\zlib-handler-1.0.1.jar" -ForegroundColor Cyan
     Write-Host "`nTo install in Burp Suite:" -ForegroundColor Yellow
     Write-Host "1. Open Burp Suite" -ForegroundColor White
     Write-Host "2. Go to Extender > Extensions" -ForegroundColor White
     Write-Host "3. Click Add" -ForegroundColor White
     Write-Host "4. Select Extension type: Java" -ForegroundColor White
-    Write-Host "5. Select file: target\zlib-handler-1.0.0.jar" -ForegroundColor White
+    Write-Host "5. Select file: target\zlib-handler-1.0.1.jar" -ForegroundColor White
 } else {
     Write-Host "`nBuild failed!" -ForegroundColor Red
     exit 1
