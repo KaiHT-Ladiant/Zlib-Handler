@@ -60,8 +60,6 @@ mvn clean package
 
 After building, the `target/zlib-handler-1.0.0.jar` file will be created.
 
-**Note**: The `build-java.ps1` script automatically finds the Burp Suite JAR and installs it to the local Maven repository. Make sure you have Maven installed and in your PATH.
-
 **Note**: The `build-java.ps1` script automatically finds the Burp Suite JAR and installs it to the local Maven repository.
 
 ## Usage
@@ -150,7 +148,7 @@ The following Zlib headers are automatically detected:
 │   └── main/
 │       └── java/
 │           └── burp/
-│               └── ZlibDecompressor.java
+│               └── ZlibHandler.java
 ├── lib/
 │   └── burpsuite_pro.jar (for compilation, not included in Git)
 ├── pom.xml
