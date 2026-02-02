@@ -34,7 +34,7 @@ A Burp Suite extension for compressing and decompressing Zlib-encoded HTTP respo
 
 ### 1. Download from Releases (Recommended)
 
-1. Download the latest JAR file from the [Releases](https://github.com/yourusername/zlib-handler/releases) page.
+1. Download the latest JAR file from the [Releases](https://github.com/kaiht-ladiant/zlib-handler/releases) page.
 2. Launch Burp Suite.
 3. Navigate to the **Extender** tab.
 4. Click **Add** in the **Extensions** section.
