@@ -21,8 +21,7 @@ A Burp Suite extension for compressing and decompressing Zlib-encoded HTTP respo
 
 ## Screenshots
 
-![Zlib Handler Extension](<img width="1212" height="870" alt="image" src="https://github.com/user-attachments/assets/815b7fc5-c18a-45fb-a462-6976a54369d0" />
-)
+![Zlib Handler Extension](https://github.com/KaiHT-Ladiant/Zlib-Handler/blob/main/Screenshots.png)
 
 ## Requirements
 
